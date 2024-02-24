@@ -131,16 +131,16 @@ frame_generate_btn.pack()
 
 
 # Entry fields
-dataField = Entry(frame_data_input, bg='light green')
+dataField = Entry(frame_data_input, bg='light grey')
 dataField.pack()
 
-filenameField = Entry(frame_generate_btn, bg='light green')
+filenameField = Entry(frame_generate_btn, bg='light grey')
 filenameField.pack()
 
-versionField = Entry(frame_version_input, bg='light green')
+versionField = Entry(frame_version_input, bg='light grey')
 versionField.pack()
 
-ecField = Entry(frame_Entry_EC, bg='light green')
+ecField = Entry(frame_Entry_EC, bg='light grey')
 ecField.pack()
 
 # Welcoming
@@ -148,20 +148,22 @@ title_main = Label(frame_welcoming, height=3, width=50, text='Welcome to open QR
 title_main.pack()
 
 # Titles
-title_welcoming = Label(frame_welcoming, height=2, width=50, text='Lets get started with making your own QR code!')
+title_welcoming = Label(frame_welcoming, height=2, width=50, text='Lets get started with making your own QR code!',
+                        bg='white')
 title_welcoming.pack()
 
-title_input_data = Label(frame_welcoming, text='In the following field place data you want to put into your QR code ↓')
+title_input_data = Label(frame_welcoming, text='In the following field place data you want to put into your QR code ↓',
+                         bg='white')
 title_input_data.pack()
 
-title_input_version = Label(frame_title_version_input, text='Choose version for your QR code (1..40) ↓')
+title_input_version = Label(frame_title_version_input, text='Choose version for your QR code (1..40) ↓', bg='white')
 title_input_version.pack()
 
 title_EC_input = Label(frame_title_EC_input, text='Now choose error correction level'
-                                                  ' for your QR code (L, M, Q or H) ↓')
+                                                  ' for your QR code (L, M, Q or H) ↓', bg='white')
 title_EC_input.pack()
 
-title_file_name = Label(frame_name_alert, text='Now create the file name for your QR code')
+title_file_name = Label(frame_name_alert, text='Now create the file name for your QR code', bg='white')
 title_file_name.pack()
 
 title_alert = Label(frame_name_alert, text='Necessarily add file extension (.png , .img or .webp)', bg='red')
