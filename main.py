@@ -1,4 +1,5 @@
 from tkinter import *
+from PIL import ImageTk, Image
 from tkinter import messagebox
 import qrcode
 
@@ -8,11 +9,11 @@ root = Tk()
 root['bg'] = 'blue'
 root.title('Open QR Code Generator')
 root.wm_attributes('-alpha', 0.8)
-root.geometry('730x450')
+root.geometry('550x700')
 
 root.resizable(width=False, height=False)
 
-canvas = Canvas(root, height=450, width=730)
+canvas = Canvas(root, height=600, width=700)
 canvas.place()
 
 # Functions
@@ -26,9 +27,9 @@ def dataget():
 
 
 def generation_stuff():
-    file_name = filenameField.get()
+    file_name = (filenameField.get())
     if not file_name:
-        messagebox.showerror(title='Error', message='Necessarily add file name and extension! (.png recommended)')
+        messagebox.showerror(title='Error', message='Necessarily add file name!')
 
     elif not dataField.get():
         messagebox.showerror(title='Error', message='There is no data for QR code!')
@@ -40,7 +41,7 @@ def generation_stuff():
         messagebox.showinfo(title='Check', message=f'You choose version: {int(versionField.get())}, '
                                                    f'error correction level: {str(ecField.get())} '
                                                    f'and file name: {str(file_name)}')
-        filename = filenameField.get()
+        filename = (filenameField.get())
         qr = qrcode.QRCode(
             version=versionField.get(),
             error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -50,13 +51,18 @@ def generation_stuff():
         qr.add_data(dataField.get())
         qr.make(fit=True)
         code = qr.make_image()
-        code.save(filename)
+        code.save(filename+'.png')
+
+        image = ImageTk.PhotoImage(Image.open(filename+'.png'))
+        image_label = Label(root, image=image)
+        image_label.image = image
+        image_label.pack()
 
     elif str(ecField.get()) == 'M':
         messagebox.showinfo(title='Check', message=f'You choose version {int(versionField.get())}, '
                                                    f'error correction level: {str(ecField.get())} '
                                                    f'and file name: {str(file_name)}')
-        filename = filenameField.get()
+        filename = (filenameField.get())
         qr = qrcode.QRCode(
             version=versionField.get(),
             error_correction=qrcode.constants.ERROR_CORRECT_M,
@@ -66,13 +72,18 @@ def generation_stuff():
         qr.add_data(dataField.get())
         qr.make(fit=True)
         code = qr.make_image()
-        code.save(filename)
+        code.save(filename+'.png')
+
+        image = ImageTk.PhotoImage(Image.open(filename+'.png'))
+        image_label = Label(root, image=image)
+        image_label.image = image
+        image_label.pack()
 
     elif str(ecField.get()) == 'Q':
         messagebox.showinfo(title='Check', message=f'You choose version {int(versionField.get())}, '
                                                    f'error correction level: {str(ecField.get())} '
                                                    f'and file name: {str(file_name)}')
-        filename = filenameField.get()
+        filename = (filenameField.get())
         qr = qrcode.QRCode(
             version=versionField.get(),
             error_correction=qrcode.constants.ERROR_CORRECT_Q,
@@ -82,13 +93,18 @@ def generation_stuff():
         qr.add_data(dataField.get())
         qr.make(fit=True)
         code = qr.make_image()
-        code.save(filename)
+        code.save(filename+'.png')
+
+        image = ImageTk.PhotoImage(Image.open(filename+'.png'))
+        image_label = Label(root, image=image)
+        image_label.image = image
+        image_label.pack()
 
     elif str(ecField.get()) == 'H':
         messagebox.showinfo(title='Check', message=f'You choose version: {int(versionField.get())}, '
                                                    f'error correction level: {str(ecField.get())} '
                                                    f'and file name: {str(file_name)}')
-        filename = filenameField.get()
+        filename = (filenameField.get())
         qr = qrcode.QRCode(
             version=versionField.get(),
             error_correction=qrcode.constants.ERROR_CORRECT_H,
@@ -98,7 +114,12 @@ def generation_stuff():
         qr.add_data(dataField.get())
         qr.make(fit=True)
         code = qr.make_image()
-        code.save(filename)
+        code.save(filename+'.png')
+
+        image = ImageTk.PhotoImage(Image.open(filename+'.png'))
+        image_label = Label(root, image=image)
+        image_label.image = image
+        image_label.pack()
 
     else:
         messagebox.showwarning(title='Warning', message='Necessarily add error correction level for QR code!')
@@ -165,9 +186,6 @@ title_EC_input.pack()
 
 title_file_name = Label(frame_name_alert, text='Now create the file name for your QR code', bg='white')
 title_file_name.pack()
-
-title_alert = Label(frame_name_alert, text='Necessarily add file extension (.png , .img or .webp)', bg='red')
-title_alert.pack()
 
 # Buttons
 btn_data = Button(frame_data_input, height=1, width=7, text='Check data', bg='white', command=dataget)
