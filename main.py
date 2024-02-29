@@ -1,3 +1,5 @@
+import tkinter
+import json
 from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox
@@ -9,12 +11,9 @@ root = Tk()
 root['bg'] = 'blue'
 root.title('Open QR Code Generator')
 root.wm_attributes('-alpha', 0.8)
-root.geometry('550x700')
+root.geometry('525x700')
 
-root.resizable(width=False, height=False)
-
-canvas = Canvas(root, height=600, width=700)
-canvas.place()
+# root.resizable(width=False, height=False)
 
 # Functions
 def dataget():
@@ -54,7 +53,7 @@ def generation_stuff():
         code.save(filename+'.png')
 
         image = ImageTk.PhotoImage(Image.open(filename+'.png'))
-        image_label = Label(root, image=image)
+        image_label = Label(target_frame, image=image)
         image_label.image = image
         image_label.pack()
 
@@ -75,7 +74,7 @@ def generation_stuff():
         code.save(filename+'.png')
 
         image = ImageTk.PhotoImage(Image.open(filename+'.png'))
-        image_label = Label(root, image=image)
+        image_label = Label(target_frame, image=image)
         image_label.image = image
         image_label.pack()
 
@@ -96,7 +95,7 @@ def generation_stuff():
         code.save(filename+'.png')
 
         image = ImageTk.PhotoImage(Image.open(filename+'.png'))
-        image_label = Label(root, image=image)
+        image_label = Label(target_frame, image=image)
         image_label.image = image
         image_label.pack()
 
@@ -117,7 +116,7 @@ def generation_stuff():
         code.save(filename+'.png')
 
         image = ImageTk.PhotoImage(Image.open(filename+'.png'))
-        image_label = Label(root, image=image)
+        image_label = Label(target_frame, image=image)
         image_label.image = image
         image_label.pack()
 
@@ -125,31 +124,51 @@ def generation_stuff():
         messagebox.showwarning(title='Warning', message='Necessarily add error correction level for QR code!')
 
 
+# General frames
+outer_frame = Frame(root, height=700, width=525, bg='blue')
+outer_frame.pack(fill=BOTH, expand=1)
+
+target_frame = Frame(root, bg='blue')
+target_frame.pack()
+
+# Canvas
+canvas1 = Canvas(outer_frame, height=850, width=510, bg='blue')
+canvas1.pack_configure(side=LEFT, fill=BOTH, expand=1)
+
+# Scrollbar
+scrollbar = tkinter.Scrollbar(outer_frame, orient=VERTICAL, command=canvas1.yview)
+scrollbar.pack(side=RIGHT, fill=Y)
+
+# Configure canvas
+canvas1.configure(yscrollcommand=scrollbar.set)
+canvas1.bind(
+    '<Configure>', lambda e: canvas1.configure(scrollregion=canvas1.bbox('up'))
+)
+
 # Frames
-frame_welcoming = Frame(root, bg='blue')
+frame_welcoming = Frame(target_frame, bg='blue')
 frame_welcoming.pack()
 
-frame_data_input = Frame(root, bg='blue')
+frame_data_input = Frame(target_frame, bg='blue')
 frame_data_input.pack()
 
-frame_title_version_input = Frame(root, bg='blue')
+frame_title_version_input = Frame(target_frame, bg='blue')
 frame_title_version_input.pack()
 
-frame_version_input = Frame(root, bg='blue')
+frame_version_input = Frame(target_frame, bg='blue')
 frame_version_input.pack()
 
-frame_title_EC_input = Frame(root, bg='blue')
+frame_title_EC_input = Frame(target_frame, bg='blue')
 frame_title_EC_input.pack()
 
-frame_Entry_EC = Frame(root, bg='blue')
+frame_Entry_EC = Frame(target_frame, bg='blue')
 frame_Entry_EC.pack()
 
-frame_name_alert = Frame(root, bg='blue')
+frame_name_alert = Frame(target_frame, bg='blue')
 frame_name_alert.pack()
 
-frame_generate_btn = Frame(root, bg='blue')
+frame_generate_btn = Frame(target_frame, bg='blue')
 frame_generate_btn.pack()
-
 
 # Entry fields
 dataField = Entry(frame_data_input, bg='light grey')
@@ -194,5 +213,5 @@ btn_data.pack()
 btn_gencode = Button(frame_generate_btn, height=1, width=10, text='Generate', bg='white', command=generation_stuff)
 btn_gencode.pack()
 
-
+canvas1.create_window((0, 0), window=target_frame, anchor="nw")
 root.mainloop()
